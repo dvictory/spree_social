@@ -1,4 +1,5 @@
-Spree::Core::Engine.routes.append do
+Spree::Core::Engine.routes.prepend do
+#Spree::Core::Engine.routes.append do
   devise_for :users,
              :class_name => Spree::User,
              :skip => [:unlocks],

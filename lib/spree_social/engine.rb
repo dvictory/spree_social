@@ -40,7 +40,11 @@ module SpreeSocial
 
   def self.setup_key_for(provider, key, secret)
     Devise.setup do |config|
-      config.omniauth provider, key, secret
+      if provider =="facebook".to_sym
+        config.omniauth provider, key, secret,:scope=>"email,offline_access,publish_stream",:authorize_params => { :display => 'popup' }
+      else
+        config.omniauth provider, key, secret
+      end
     end
   end
 end
