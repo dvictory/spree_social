@@ -3,7 +3,8 @@ Spree::Core::Engine.routes.prepend do
   devise_for :users,
              :class_name => Spree::User,
              :skip => [:unlocks],
-             :controllers => { :sessions => 'spree/user_sessions', :omniauth_callbacks => "spree/omniauth_callbacks", :registrations => 'spree/user_registrations' }
+             :controllers => { :sessions => 'spree/user_sessions', :omniauth_callbacks => "spree/omniauth_callbacks", :registrations => 'spree/user_registrations',:passwords => 'spree/user_passwords' }
+
   resources :user_authentications
 
   match 'account' => 'users#show', :as => 'user_root'

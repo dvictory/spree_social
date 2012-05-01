@@ -5,9 +5,10 @@ Spree::User.class_eval do
 
   def apply_omniauth(omniauth)
     user_authentications.build(:provider => omniauth['provider'], :uid => omniauth['uid'])
-    self.email = omniauth[:info][:email] if omniauth[:info].present?
-    self.login = omniauth[:info][:nickname] if omniauth[:info].present?
-
+    if omniauth['provider'] == "facebook"
+      self.email = omniauth[:info][:email] if omniauth[:info].present?
+      self.login = omniauth[:info][:nickname] if omniauth[:info].present?
+    end
   end
 
   def password_required?

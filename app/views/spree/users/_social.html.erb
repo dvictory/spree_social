@@ -1,11 +1,12 @@
 <% @body_id = 'login' %>
 <div id="existing-customer">
   <table>
+    <% # "TODO remove Email from here. " %>
     <tr>
       <% if @user.anonymous? %>
-        <%= render :partial => 'spree/shared/social_registrations', :locals => {:user => @user, :omniauth => @omniauth} %>
+        <%= render :partial => 'spree/shared/social', :locals => {:user => @user, :omniauth => @omniauth} %>
       <% else %>
-      <td><%= t("email") %>:</td>
+      <td><%= t("emails") %>:</td>
       <td>
         <%= @user.email %>
       </td>

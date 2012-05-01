@@ -1,0 +1,17 @@
+%h2
+  = t(:connected_accounts)
+.authentications
+  - existing=[]
+  - for user_authentication in @user.user_authentications
+    -existing << user_authentication.provider
+    .authentication
+      = image_tag "store/#{user_authentication.provider}_32.png", :size => "32x32"
+      ="Connected to Facebook ("
+      =link_to user_authentication.uid,"http://facebook.com/#{user_authentication.uid}",:target => "_blank"
+      =")"
+      = link_to "X (remove)", user_authentication, :confirm => "#{t(:remove_authentication_option_confirmation)}", :method => :delete, :class => "remove"
+  .clear
+- Spree::AuthenticationMethod.where(:environment => ::Rails.env).each do |method|
+  -if existing.index(method.provider).nil?
+    - img = "store/#{method.provider}-connect.png"
+    = link_to(image_tag(img, :alt => "#{method.provider}"), "users/auth/#{method.provider}",:class => "popup", :"data-width" => 600, :"data-height" => 400, :title => "#{t(:sign_in_with)} #{method.provider.capitalize}") if method.active

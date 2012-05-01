@@ -1,14 +1,14 @@
 PATH
   remote: .
   specs:
-    spree_social (1.0.1)
+    spree_social (2.0.0)
       oa-core
       omniauth
       omniauth-facebook
       omniauth-github
       omniauth-twitter
-      spree_auth (~> 1.0.0)
-      spree_core (~> 1.0.0)
+      spree_auth (>= 1.0.0)
+      spree_core (>= 1.0.0)
 
 GEM
   remote: http://rubygems.org/
@@ -103,7 +103,7 @@ GEM
       railties (>= 3.0.0)
     linecache19 (0.5.12)
       ruby_core_source (>= 0.1.4)
-    mail (2.3.2)
+    mail (2.3.3)
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
@@ -207,11 +207,11 @@ GEM
       ffi (~> 1.0.9)
       multi_json (~> 1.0.4)
       rubyzip
-    spree_auth (1.0.1)
+    spree_auth (1.0.3)
       cancan (= 1.6.7)
       devise (= 1.4.8)
-      spree_core (= 1.0.1)
-    spree_core (1.0.1)
+      spree_core (= 1.0.3)
+    spree_core (1.0.3)
       activemerchant (= 1.20.1)
       acts_as_list (= 0.1.4)
       deface (>= 0.7.2)
