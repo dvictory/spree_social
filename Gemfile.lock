@@ -1,11 +1,7 @@
 PATH
   remote: .
   specs:
-<<<<<<< HEAD
-    spree_social (2.0.0)
-=======
     spree_social (2.1.0)
->>>>>>> upstream/master
       oa-core
       omniauth
       omniauth-facebook
