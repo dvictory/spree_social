@@ -6,8 +6,11 @@
     -existing << user_authentication.provider
     .authentication
       = image_tag "store/#{user_authentication.provider}_32.png", :size => "32x32"
-      ="Connected to Facebook ("
-      =link_to user_authentication.uid,"http://facebook.com/#{user_authentication.uid}",:target => "_blank"
+      ="Connected to #{user_authentication.provider.capitalize} ("
+      -if user_authentication.provider=="facebook"
+        =link_to user_authentication.uid,"http://facebook.com/#{user_authentication.uid}",:target => "_blank"
+      -else
+        =link_to user_authentication.uid,"https://twitter.com/account/redirect_by_id?id=#{user_authentication.uid}",:target => "_blank"
       =")"
       = link_to "X (remove)", user_authentication, :confirm => "#{t(:remove_authentication_option_confirmation)}", :method => :delete, :class => "remove"
   .clear

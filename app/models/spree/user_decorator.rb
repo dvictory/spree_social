@@ -8,7 +8,7 @@ Spree::User.class_eval do
       self.email = omniauth['info']['email'] if email.blank?
       self.first_name = omniauth['info']['first_name'] if first_name.blank?
       self.last_name = omniauth['info']['last_name'] if last_name.blank?
-      self.login = omniauth['info']['nickname'] if omniauth['info'].present?
+      #self.login = omniauth['info']['nickname'] if omniauth['info'].present?
     end
     user_authentications.build(:provider => omniauth['provider'], :uid => omniauth['uid'])
   end
