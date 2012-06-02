@@ -43,6 +43,7 @@ class Spree::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       }
     end
   end
+
   def facebook
     if request.env["omniauth.error"].present?
       flash[:error] = t("devise.omniauth_callbacks.failure", :kind => auth_hash['provider'], :reason => t(:user_was_not_valid))
@@ -57,7 +58,10 @@ class Spree::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       #sign in user if we are not signed it
       if current_user.nil?
         flash[:notice] = "Signed in successfully"
-        sign_in_and_redirect :user, authentication.user
+        #sign_in_and_redirect :user, authentication.user
+        sign_in authentication.user, :event => :authentication
+        @after_sign_in_url = after_sign_in_path_for(authentication.user)
+        render 'callback', :layout => false
       elsif current_user and current_user.id == authentication.user.id
         flash[:notice] = "You have successfully linked your #{auth_hash['provider'].capitalize} account."
         #sign_in_and_redirect :user, authentication.user
@@ -89,21 +93,14 @@ class Spree::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       user = Spree::User.new
       user.apply_omniauth(auth_hash)
       user.email = auth_hash[:info][:email] if auth_hash[:info].present?
+      user.first_name = auth_hash[:info][:first_name]
+      user.last_name = auth_hash[:info][:last_name]
+
       session[:omniauth] = auth_hash.except('extra')
       flash[:notice] = t(:one_more_step, :kind => auth_hash['provider'].capitalize)
       @after_sign_in_url = new_user_registration_url
       render 'callback', :layout => false
-      #redirect_to new_user_registration_url
-      #  flash[:notice] = t(:one_more_step, :kind => auth_hash['provider'].capitalize)
-      #  redirect_to new_user_registration_url
-      #if user.save
-      #  flash[:notice] = "Signed in successfully."
-      #  sign_in_and_redirect :user, user
-      #else
-      #  session[:omniauth] = auth_hash.except('extra')
-      #  flash[:notice] = t(:one_more_step, :kind => auth_hash['provider'].capitalize)
-      #  redirect_to new_user_registration_url
-      #end
+
     end
 
     if current_order

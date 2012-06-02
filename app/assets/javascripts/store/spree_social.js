@@ -1,6 +1,7 @@
 //= require store/spree_core
 //= require_self
 
+
 function popupCenter(url, width, height, name) {
   var left = (screen.width/2)-(width/2);
   var top = (screen.height/2)-(height/2);
@@ -16,6 +17,12 @@ $(document).ready(function(){
 
 
 if(window.opener) {
-window.opener.location.reload(true);
-window.close()
+    if(window.opener.location.pathname.indexOf("login") < 0){
+        window.opener.location.reload(true);
+        window.close();
+
+    }else{
+        window.opener.location ="/";
+        window.close();
+    }
 }

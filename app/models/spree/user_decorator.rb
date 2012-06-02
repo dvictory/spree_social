@@ -6,12 +6,11 @@ Spree::User.class_eval do
   def apply_omniauth(omniauth)
     if omniauth['provider'] == "facebook"
       self.email = omniauth['info']['email'] if email.blank?
+      self.first_name = omniauth['info']['first_name'] if first_name.blank?
+      self.last_name = omniauth['info']['last_name'] if last_name.blank?
+      self.login = omniauth['info']['nickname'] if omniauth['info'].present?
     end
     user_authentications.build(:provider => omniauth['provider'], :uid => omniauth['uid'])
-    if omniauth['provider'] == "facebook"
-      self.email = omniauth[:info][:email] if omniauth[:info].present?
-      self.login = omniauth[:info][:nickname] if omniauth[:info].present?
-    end
   end
 
   def password_required?
