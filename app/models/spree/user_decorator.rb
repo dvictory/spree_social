@@ -9,8 +9,9 @@ Spree::User.class_eval do
       self.first_name = omniauth['info']['first_name'] if first_name.blank?
       self.last_name = omniauth['info']['last_name'] if last_name.blank?
       #self.login = omniauth['info']['nickname'] if omniauth['info'].present?
+
     end
-    user_authentications.build(:provider => omniauth['provider'], :uid => omniauth['uid'])
+    user_authentications.build(:provider => omniauth['provider'], :uid => omniauth['uid'],:oauth_token => omniauth['credentials']['token'],:oauth_expires_at => Time.at(omniauth['credentials']['expires_at']))
   end
 
   def password_required?

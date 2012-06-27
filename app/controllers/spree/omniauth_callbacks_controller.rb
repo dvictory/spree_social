@@ -54,6 +54,9 @@ class Spree::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     authentication = Spree::UserAuthentication.find_by_provider_and_uid(auth_hash['provider'], auth_hash['uid'])
     session[:fb_token] = auth_hash[:credentials][:token] if auth_hash[:credentials].present?
     if !authentication.nil?  #We already have an authentication
+      authentication.oauth_token = auth_hash[:credentials][:token] if auth_hash[:credentials].present?
+      authentication.oauth_token = auth_hash[:credentials][:expires_at] if auth_hash[:credentials].present?
+      authentication.save
       #see if the current user is the one that has the authentication
       #sign in user if we are not signed it
       if current_user.nil?
@@ -80,7 +83,7 @@ class Spree::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       end
 
     elsif current_user
-      current_user.user_authentications.create!(:provider => auth_hash['provider'], :uid => auth_hash['uid'])
+      current_user.user_authentications.create!(:provider => auth_hash['provider'], :uid => auth_hash['uid'],:oauth_token=>auth_hash[:credentials][:token],:oauth_expires_at=>auth_hash[:credentials][:expires_at])
       flash[:notice] = "Account linking successful."
       @after_sign_in_url = account_url
       render 'callback', :layout => false
