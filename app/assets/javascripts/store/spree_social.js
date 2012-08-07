@@ -17,12 +17,14 @@ $(document).ready(function(){
 
 
 if(window.opener) {
-    if(window.opener.location.pathname.indexOf("login") < 0){
-        window.opener.location.reload(true);
-        window.close();
+    if(window.opener.location.pathname != undefined){
+        if(window.opener.location.pathname.indexOf("login") < 0){
+            window.opener.location.reload(true);
+            window.close();
 
-    }else{
-        window.opener.location ="/";
-        window.close();
+        }else{
+            window.opener.location ="/";
+            window.close();
+        }
     }
 }
