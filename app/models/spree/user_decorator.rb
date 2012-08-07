@@ -11,7 +11,8 @@ Spree::User.class_eval do
       #self.login = omniauth['info']['nickname'] if omniauth['info'].present?
 
     end
-    user_authentications.build(:provider => omniauth['provider'], :uid => omniauth['uid'],:oauth_token => omniauth['credentials']['token'],:oauth_expires_at => Time.at(omniauth['credentials']['expires_at']))
+    exp_time = Time.at(omniauth['credentials']['expires_at']) rescue Time.now
+    user_authentications.build(:provider => omniauth['provider'], :uid => omniauth['uid'],:oauth_token => omniauth['credentials']['token'],:oauth_expires_at => exp_time)
   end
 
   def password_required?
