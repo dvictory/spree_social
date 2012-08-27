@@ -1,6 +1,16 @@
 Spree::UserRegistrationsController.class_eval do
   def create
-    super
+    build_resource(params[:user])
+    if @user.save
+      set_flash_message(:notice, :signed_up)
+      sign_in(:user, @user)
+      fire_event('spree.user.signup', :user => @user, :order => current_order(true))
+      sign_in_and_redirect(:user, @user)
+    else
+      clean_up_passwords(@user)
+      render :new
+    end
+
     session[:omniauth] = nil unless @user.new_record?
   end
 
