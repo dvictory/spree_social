@@ -1,6 +1,7 @@
 Spree::UserRegistrationsController.class_eval do
   def create
     build_resource(params[:user])
+    check_for_promo
     if @user.save
       set_flash_message(:notice, :signed_up)
       sign_in(:user, @user)
@@ -10,7 +11,6 @@ Spree::UserRegistrationsController.class_eval do
       clean_up_passwords(@user)
       render :new
     end
-
     session[:omniauth] = nil unless @user.new_record?
   end
 
@@ -22,6 +22,17 @@ Spree::UserRegistrationsController.class_eval do
       @user.apply_omniauth(session[:omniauth])
       #@user.valid?
       @user
+    end
+  end
+
+  def check_for_promo
+    if @user.respond_to?(:signup_code) and !@user.signup_code.blank?
+      if @user.signup_code.upcase != "DSFREE5"
+        clean_up_passwords(@user)
+        render :new
+        session[:omniauth] = nil unless @user.new_record?
+        return
+      end
     end
   end
 end
