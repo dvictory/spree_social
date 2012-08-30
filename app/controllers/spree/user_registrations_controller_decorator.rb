@@ -1,5 +1,5 @@
 Spree::UserRegistrationsController.class_eval do
-  ssl_allowed
+  ssl_allowed :create
   def create
     build_resource(params[:user])
     check_for_promo
