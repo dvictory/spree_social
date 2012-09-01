@@ -31,6 +31,6 @@ Spree::UserRegistrationsController.class_eval do
   end
 
   def check_for_promo
-    @user.respond_to?(:signup_code) and !@user.signup_code.blank? and @user.signup_code.upcase == "DSFREE5"
+    @user.respond_to?(:signup_code) and ((!@user.signup_code.blank? and @user.signup_code.upcase == "DSFREE5") or @user.signup_code.blank?)
   end
 end
