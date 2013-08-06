@@ -10,4 +10,5 @@ class Spree::AuthenticationMethod < ActiveRecord::Base
     sc = sc.where(["provider NOT IN (?)", user.user_authentications.map(&:provider)]) if user and !user.user_authentications.empty?
     sc
   }
+
 end

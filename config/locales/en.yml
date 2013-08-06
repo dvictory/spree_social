@@ -1,5 +1,5 @@
 en:
-  add_another_service: "Add another service to sign in with:"
+  add_another_service: "Link your account to another service for advanced options:"
   edit_social_method: "Editing Social Authentication Method"
   new_social_method: "New Authentication Method"
   one_more_step: 'One more step to complete your registration from %{kind}'
@@ -11,5 +11,5 @@ en:
   social_authentication_methods: "Social Authentication Methods"
   social_authentication_methods_description: "Setup OAuth Authentication Methods"
   social_provider: "Social Provider"
+  sign_in_with: "Sign In With"
   please_confirm_your_email: "Please confirm your email address to continue"
-  sign_in_with: "Login with %{provider}"

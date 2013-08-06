@@ -2,7 +2,7 @@
   <h2><%= t(:sign_in_through_one_of_these_services) %>:</h2>
 <% end %>
 
-<% Spree::AuthenticationMethod.available_for(@user).each do |method| %>
-  <% img = "store/#{method.provider}_32.png" %>
-  <%= link_to(image_tag(img, :size => "32x32", :alt => "#{method.provider}"), "http://#{Spree::Config[:site_url]}/users/auth/#{method.provider}", :title => t(:sign_in_with, :provider => method.provider)) if method.active %>
-<% end %>
+<% Spree::AuthenticationMethod.where(:environment => ::Rails.env).each do |method| %>
+  <% img = "store/#{method.provider}_64.png" %>
+  <%= link_to(image_tag(img, :size => "64x64", :alt => "#{method.provider}"), "http://#{Spree::Config[:site_url]}users/auth/#{method.provider}",:class => "popup", :"data-width" => 600, :"data-height" => 400, :title => "#{t(:sign_in_with)} #{method.provider.capitalize}") if method.active %>
+  <% end %>
